@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  # name: git-gateway
+  name: test-repo
   repo: bachx/rental-decap-cms
   branch: main
 

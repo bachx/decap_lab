@@ -1,28 +1,61 @@
-"use client";
+import { useEffect } from "react";
+import Head from "next/head";
 
-export default function Admin() {
-  return (
-    <html
-      lang="en"
-      dangerouslySetInnerHTML={{
-        __html: `
-        <!doctype html>
-		<head>
-			<meta charset="utf-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
-			<title>Content Manager</title>
-		</head>
-		<body>
-			<!-- Dashboard script-->
-			<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-			<!-- netlify identity -->
-			<script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-			<!-- Customize the netlify identity widget to refresh on logout preventing users from using the cms when not logged in and then seeing an error -->
-			<script is:inline>netlifyIdentity.on('logout', () => location.reload());</script>
-		</body>`,
-      }}
-    />
-  );
+interface NetlifyIdentity {
+  on: (event: string, callback: (user: any) => void) => void; // Update here
+  // Add other properties and methods as needed
 }
+
+declare global {
+  interface Window {
+    netlifyIdentity: NetlifyIdentity;
+  }
+}
+
+const CMSPage: React.FC = () => {
+  useEffect(() => {
+    // Initialize Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+
+      // Dynamically add the decap-cms script in the body
+      // const script = document.createElement("script");
+      // script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+      // script.async = true;
+      // document.body.appendChild(script);
+
+      // return () => {
+      //   document.body.removeChild(script);
+      // };
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex" />
+        <title>Content Manager</title>
+        <script
+          src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"
+          async
+        ></script>
+        <script
+          src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+          async
+        ></script>
+        <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+      </Head>
+      <main id="cms" />
+    </>
+  );
+};
+
+export default CMSPage;
