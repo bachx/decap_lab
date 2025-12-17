@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  repo: karlthomaas/rental-decap-cms
+  repo: bachx/rental-decap-cms
   branch: main
 
 local_backend: true #  # when using the default proxy server port
