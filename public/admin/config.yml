@@ -13,8 +13,8 @@ public_folder: "src/assets/images" # The src attribute for uploaded med
 media_library:
   name: cloudinary
   config:
-    cloud_name: dda929x01
-    api_key: 1023839412409
+    cloud_name: dymohadf6
+    api_key: 978111225765696
     multiple: true
 
 collections:
