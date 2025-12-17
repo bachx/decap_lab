@@ -1,6 +1,7 @@
+# local_backend: true
 backend:
-  # name: git-gateway
-  name: test-repo
+  name: git-gateway
+  # name: test-repo
   repo: bachx/rental-decap-cms
   branch: main
 
