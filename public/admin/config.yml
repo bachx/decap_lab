@@ -2,7 +2,7 @@
 backend:
   name: git-gateway
   # name: test-repo
-  repo: bachx/rental-decap-cms
+  repo: bachx/decap_lab
   branch: main
 
 local_backend: true #  # when using the default proxy server port
